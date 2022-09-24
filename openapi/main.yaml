@@ -60,6 +60,7 @@ paths:
           required: true
           schema:
             type: string
+          example: jbeshir
       responses:
         "200":
           description: OK
@@ -103,6 +104,7 @@ paths:
           required: true
           schema:
             type: string
+          example: ojKdYJvKvdZiWDEyBmEab7kZXYI3
       responses:
         "200":
           description: OK
@@ -176,6 +178,428 @@ paths:
                   daily: 0
                   weekly: 0
 
+  /v0/groups:
+    get:
+      operationId: v0_groups_get
+      description: "Retrieves all groups."
+      tags:
+        - Groups
+      parameters:
+        - name: availableToUserId
+          in: query
+          description: If set, limits the returned groups to those an authenticated user can join or is in.
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+              example:
+                - slug: clearer-thinking-regrants
+                  totalContracts: 28
+                  totalMembers: 117
+                  mostRecentContractAddedTime: 1663636207725
+                  id: fhksfIgqyWf7OxsV9nkM
+                  about: Clearer Thinking will give grants to about half of 28 entries; predict which
+                    will win for a share of the $13000 prize pool
+                  name: Clearer Thinking Regrants
+                  anyoneCanJoin: true
+                  mostRecentActivityTime: 1664035924260
+                  createdTime: 1663278422874
+                  aboutPostId: wPRfAbGbBrukIor8iuBt
+                  creatorId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                  cachedLeaderboard:
+                    topCreators:
+                      - score: 250273.5680148146
+                        userId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                    topTraders:
+                      - score: 5086.183948504941
+                        userId: ojKdYJvKvdZiWDEyBmEab7kZXYI3
+                      - userId: wjbOTRRJ7Ee5mjSMMYrtwoWuiCp2
+                        score: 3345.913332002718
+                      - userId: IEVDP2LTpgMYaka38r1TVZcabWS2
+                        score: 2963.504001983013
+                      - userId: skGf6ln62qPPMIaxpRZG8JH9wbJ3
+                        score: 1872.228290523699
+                      - score: 671.514079955453
+                        userId: w1knZ6yBvEhRThYPEYTwlmGv7N33
+                      - score: 353.3863030813358
+                        userId: ilJdhpLzZZSUgzueJOs2cbRnJn82
+                      - score: 323.59781945858424
+                        userId: yRx5TswGklVtUPv4nGbF9vn3qeh1
+                      - score: 317.58526524058254
+                        userId: igi2zGXsfxYPgB0DJTXVJVmwCOr2
+                      - userId: 4w7ZYpvZ3OfE0A8fuWttBVZWvRR2
+                        score: 289.48720985645537
+                      - userId: sTxaR7V3rxQY5jKlSgTLX1L1aPM2
+                        score: 237.78830540168468
+                      - score: 220.5729541869886
+                        userId: LRxT6x94MJfMwveEF8gTDkrTxto1
+                      - userId: Jnw2DHlMAPVYcj3WOVZ1EK1QEnB3
+                        score: 215.90570300079025
+                      - userId: rEHBdwqHM8fIdcrwBemaavsY6GQ2
+                        score: 208.22199771596598
+                      - score: 170.14080415478747
+                        userId: WQYDzL1AUNh1LrgklL3tubay3kk1
+                      - userId: lHxg3179e4amWm5LJhJoJrcWK482
+                        score: 138.39591231722554
+                      - userId: Lb4jlfLRtPhJlhJ3gJoxQfa5JBF2
+                        score: 89.72866547736102
+                      - userId: k13AzY3mu8XTju3xRZV3P8qBjEC2
+                        score: 77.12069255455329
+                      - userId: y5k6vEuPBTVgFf96qqNksdkVjIt1
+                        score: 75.96764687883328
+                      - userId: rFRYRppqCvbWtTSOhkQZJj2ACN02
+                        score: 52.13531278248453
+                      - userId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                        score: 49.32175151888467
+                      - score: 42.98594262401956
+                        userId: 9S6nmqwnZbQyc3adbS5loOsbM5P2
+                      - score: 39.61852507972264
+                        userId: xr0hLIs3VpbC8xHhiRxYUEG4en63
+                      - userId: mwDJuMFoXLTkXDdfnRaXQXaJqww1
+                        score: 38.24780090503394
+                      - userId: jO7sUhIDTQbAJ3w86akzncTlpRG2
+                        score: 36.45352993667529
+                      - userId: rX4SKaPEoUOQNqQIfnqyZQwXhNj1
+                        score: 34.86300574634476
+                      - score: 29.677061767953994
+                        userId: QtBvbpuAP0cXKh8qUgCsSpGW0nh2
+                      - userId: GPpWQpjHAgPvW3BlsKZf8qhv4yH3
+                        score: 21.581174260703683
+                      - userId: SNLRUd19xDTn32MWCDqswcHkyFH3
+                        score: 17.38641570209124
+                      - score: 15.90490386319656
+                        userId: jU6q1ZdnPgWlZTa1E1W2CQFPdME3
+                      - score: 15.613380309956685
+                        userId: JJjmWoXwhET7TJ8CHADmRDSovuX2
+                      - score: 11.36122480940745
+                        userId: YGZdZUSFQyM8j2YzPaBqki8NBz23
+                      - score: 11.029016733154446
+                        userId: kyVV8tKaA5Mu69oZWDinwv20jaD2
+                      - score: 9.682299319124468
+                        userId: i7BDZ34Ex1TXYzIZgsEqgJmNFHi2
+                      - score: 7.391136019124753
+                        userId: wIuHQ2CzoGSofjPKHBouEzNMcMy2
+                      - userId: w29JuzBYXLM9t89V7IzuSl5Ay9p2
+                        score: 5.681281767920268
+                      - userId: H6b5PWELWfRV6HhyHAlCGq7yJJu2
+                        score: 5.670988623976584
+                      - userId: BmyV8CvJyActtCWcN3jBL2rCox82
+                        score: 5.4833668828990625
+                      - userId: gy7XPwvOfCZG1ScLESbNKm4YG4c2
+                        score: 4.420709695186832
+                      - userId: uW5CzMuacDT9FWeLZdvy3EevEJ33
+                        score: 3.3719606978733765
+                      - score: 3.1992418833558407
+                        userId: jYAx4a6pX2eFaxHqYma4NIz3Inw2
+                      - userId: ci3npTDMBMMxuFGR5Fxs4BcCesJ3
+                        score: 2.6475365360504597
+                      - score: 2.3916950116206444
+                        userId: ffwIBb255DhSsJRh3VWZ4RY2pxz2
+                      - userId: 1byffozk9qMdipy9hkZI5jyIx222
+                        score: 2.3802758665690495
+                      - userId: 5zeWhzi9nlNNf5C9TVjshAN7QOd2
+                        score: 2.0145829319943545
+                      - score: 1.9128402960246653
+                        userId: EUxW8oPZBNPRI9gcN1yXN19kKHc2
+                      - score: 1.85968354694241
+                        userId: JSL3iphVpGajj9FErpEEZgsJFsI2
+                      - userId: Rt9NXFMcLCP8O5r5668ip0uT2bf1
+                        score: 1.7409167638563119
+                      - userId: PZnIInE520cQKvTty0lOx1ND7uy1
+                        score: 1.7109875008143742
+                      - score: 1.646499976895404
+                        userId: m1vFVXi0APUBsi455NAe1ug5eFJ3
+                      - score: 1.636980786513547
+                        userId: CcSCY51su1WMlZWhKyWTDoG29H93
+
+  /v0/group/{slug}:
+    get:
+      operationId: v0_group_by_slug_get
+      description: "Retrieves a group by its slug"
+      tags:
+        - Groups
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+          example: clearer-thinking-regrants
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+              example:
+                slug: clearer-thinking-regrants
+                totalContracts: 28
+                totalMembers: 117
+                mostRecentContractAddedTime: 1663636207725
+                id: fhksfIgqyWf7OxsV9nkM
+                about: Clearer Thinking will give grants to about half of 28 entries; predict which
+                  will win for a share of the $13000 prize pool
+                name: Clearer Thinking Regrants
+                anyoneCanJoin: true
+                mostRecentActivityTime: 1664035924260
+                createdTime: 1663278422874
+                aboutPostId: wPRfAbGbBrukIor8iuBt
+                creatorId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                cachedLeaderboard:
+                  topCreators:
+                    - score: 250273.5680148146
+                      userId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                  topTraders:
+                    - score: 5086.183948504941
+                      userId: ojKdYJvKvdZiWDEyBmEab7kZXYI3
+                    - userId: wjbOTRRJ7Ee5mjSMMYrtwoWuiCp2
+                      score: 3345.913332002718
+                    - userId: IEVDP2LTpgMYaka38r1TVZcabWS2
+                      score: 2963.504001983013
+                    - userId: skGf6ln62qPPMIaxpRZG8JH9wbJ3
+                      score: 1872.228290523699
+                    - score: 671.514079955453
+                      userId: w1knZ6yBvEhRThYPEYTwlmGv7N33
+                    - score: 353.3863030813358
+                      userId: ilJdhpLzZZSUgzueJOs2cbRnJn82
+                    - score: 323.59781945858424
+                      userId: yRx5TswGklVtUPv4nGbF9vn3qeh1
+                    - score: 317.58526524058254
+                      userId: igi2zGXsfxYPgB0DJTXVJVmwCOr2
+                    - userId: 4w7ZYpvZ3OfE0A8fuWttBVZWvRR2
+                      score: 289.48720985645537
+                    - userId: sTxaR7V3rxQY5jKlSgTLX1L1aPM2
+                      score: 237.78830540168468
+                    - score: 220.5729541869886
+                      userId: LRxT6x94MJfMwveEF8gTDkrTxto1
+                    - userId: Jnw2DHlMAPVYcj3WOVZ1EK1QEnB3
+                      score: 215.90570300079025
+                    - userId: rEHBdwqHM8fIdcrwBemaavsY6GQ2
+                      score: 208.22199771596598
+                    - score: 170.14080415478747
+                      userId: WQYDzL1AUNh1LrgklL3tubay3kk1
+                    - userId: lHxg3179e4amWm5LJhJoJrcWK482
+                      score: 138.39591231722554
+                    - userId: Lb4jlfLRtPhJlhJ3gJoxQfa5JBF2
+                      score: 89.72866547736102
+                    - userId: k13AzY3mu8XTju3xRZV3P8qBjEC2
+                      score: 77.12069255455329
+                    - userId: y5k6vEuPBTVgFf96qqNksdkVjIt1
+                      score: 75.96764687883328
+                    - userId: rFRYRppqCvbWtTSOhkQZJj2ACN02
+                      score: 52.13531278248453
+                    - userId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                      score: 49.32175151888467
+                    - score: 42.98594262401956
+                      userId: 9S6nmqwnZbQyc3adbS5loOsbM5P2
+                    - score: 39.61852507972264
+                      userId: xr0hLIs3VpbC8xHhiRxYUEG4en63
+                    - userId: mwDJuMFoXLTkXDdfnRaXQXaJqww1
+                      score: 38.24780090503394
+                    - userId: jO7sUhIDTQbAJ3w86akzncTlpRG2
+                      score: 36.45352993667529
+                    - userId: rX4SKaPEoUOQNqQIfnqyZQwXhNj1
+                      score: 34.86300574634476
+                    - score: 29.677061767953994
+                      userId: QtBvbpuAP0cXKh8qUgCsSpGW0nh2
+                    - userId: GPpWQpjHAgPvW3BlsKZf8qhv4yH3
+                      score: 21.581174260703683
+                    - userId: SNLRUd19xDTn32MWCDqswcHkyFH3
+                      score: 17.38641570209124
+                    - score: 15.90490386319656
+                      userId: jU6q1ZdnPgWlZTa1E1W2CQFPdME3
+                    - score: 15.613380309956685
+                      userId: JJjmWoXwhET7TJ8CHADmRDSovuX2
+                    - score: 11.36122480940745
+                      userId: YGZdZUSFQyM8j2YzPaBqki8NBz23
+                    - score: 11.029016733154446
+                      userId: kyVV8tKaA5Mu69oZWDinwv20jaD2
+                    - score: 9.682299319124468
+                      userId: i7BDZ34Ex1TXYzIZgsEqgJmNFHi2
+                    - score: 7.391136019124753
+                      userId: wIuHQ2CzoGSofjPKHBouEzNMcMy2
+                    - userId: w29JuzBYXLM9t89V7IzuSl5Ay9p2
+                      score: 5.681281767920268
+                    - userId: H6b5PWELWfRV6HhyHAlCGq7yJJu2
+                      score: 5.670988623976584
+                    - userId: BmyV8CvJyActtCWcN3jBL2rCox82
+                      score: 5.4833668828990625
+                    - userId: gy7XPwvOfCZG1ScLESbNKm4YG4c2
+                      score: 4.420709695186832
+                    - userId: uW5CzMuacDT9FWeLZdvy3EevEJ33
+                      score: 3.3719606978733765
+                    - score: 3.1992418833558407
+                      userId: jYAx4a6pX2eFaxHqYma4NIz3Inw2
+                    - userId: ci3npTDMBMMxuFGR5Fxs4BcCesJ3
+                      score: 2.6475365360504597
+                    - score: 2.3916950116206444
+                      userId: ffwIBb255DhSsJRh3VWZ4RY2pxz2
+                    - userId: 1byffozk9qMdipy9hkZI5jyIx222
+                      score: 2.3802758665690495
+                    - userId: 5zeWhzi9nlNNf5C9TVjshAN7QOd2
+                      score: 2.0145829319943545
+                    - score: 1.9128402960246653
+                      userId: EUxW8oPZBNPRI9gcN1yXN19kKHc2
+                    - score: 1.85968354694241
+                      userId: JSL3iphVpGajj9FErpEEZgsJFsI2
+                    - userId: Rt9NXFMcLCP8O5r5668ip0uT2bf1
+                      score: 1.7409167638563119
+                    - userId: PZnIInE520cQKvTty0lOx1ND7uy1
+                      score: 1.7109875008143742
+                    - score: 1.646499976895404
+                      userId: m1vFVXi0APUBsi455NAe1ug5eFJ3
+                    - score: 1.636980786513547
+                      userId: CcSCY51su1WMlZWhKyWTDoG29H93
+
+  /v0/group/by-id/{group_id}:
+    get:
+      operationId: v0_group_by_id_get
+      description: "Retrieves a group by its ID"
+      tags:
+        - Groups
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: fhksfIgqyWf7OxsV9nkM
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+              example:
+                slug: clearer-thinking-regrants
+                totalContracts: 28
+                totalMembers: 117
+                mostRecentContractAddedTime: 1663636207725
+                id: fhksfIgqyWf7OxsV9nkM
+                about: Clearer Thinking will give grants to about half of 28 entries; predict which
+                  will win for a share of the $13000 prize pool
+                name: Clearer Thinking Regrants
+                anyoneCanJoin: true
+                mostRecentActivityTime: 1664035924260
+                createdTime: 1663278422874
+                aboutPostId: wPRfAbGbBrukIor8iuBt
+                creatorId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                cachedLeaderboard:
+                  topCreators:
+                    - score: 250273.5680148146
+                      userId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                  topTraders:
+                    - score: 5086.183948504941
+                      userId: ojKdYJvKvdZiWDEyBmEab7kZXYI3
+                    - userId: wjbOTRRJ7Ee5mjSMMYrtwoWuiCp2
+                      score: 3345.913332002718
+                    - userId: IEVDP2LTpgMYaka38r1TVZcabWS2
+                      score: 2963.504001983013
+                    - userId: skGf6ln62qPPMIaxpRZG8JH9wbJ3
+                      score: 1872.228290523699
+                    - score: 671.514079955453
+                      userId: w1knZ6yBvEhRThYPEYTwlmGv7N33
+                    - score: 353.3863030813358
+                      userId: ilJdhpLzZZSUgzueJOs2cbRnJn82
+                    - score: 323.59781945858424
+                      userId: yRx5TswGklVtUPv4nGbF9vn3qeh1
+                    - score: 317.58526524058254
+                      userId: igi2zGXsfxYPgB0DJTXVJVmwCOr2
+                    - userId: 4w7ZYpvZ3OfE0A8fuWttBVZWvRR2
+                      score: 289.48720985645537
+                    - userId: sTxaR7V3rxQY5jKlSgTLX1L1aPM2
+                      score: 237.78830540168468
+                    - score: 220.5729541869886
+                      userId: LRxT6x94MJfMwveEF8gTDkrTxto1
+                    - userId: Jnw2DHlMAPVYcj3WOVZ1EK1QEnB3
+                      score: 215.90570300079025
+                    - userId: rEHBdwqHM8fIdcrwBemaavsY6GQ2
+                      score: 208.22199771596598
+                    - score: 170.14080415478747
+                      userId: WQYDzL1AUNh1LrgklL3tubay3kk1
+                    - userId: lHxg3179e4amWm5LJhJoJrcWK482
+                      score: 138.39591231722554
+                    - userId: Lb4jlfLRtPhJlhJ3gJoxQfa5JBF2
+                      score: 89.72866547736102
+                    - userId: k13AzY3mu8XTju3xRZV3P8qBjEC2
+                      score: 77.12069255455329
+                    - userId: y5k6vEuPBTVgFf96qqNksdkVjIt1
+                      score: 75.96764687883328
+                    - userId: rFRYRppqCvbWtTSOhkQZJj2ACN02
+                      score: 52.13531278248453
+                    - userId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                      score: 49.32175151888467
+                    - score: 42.98594262401956
+                      userId: 9S6nmqwnZbQyc3adbS5loOsbM5P2
+                    - score: 39.61852507972264
+                      userId: xr0hLIs3VpbC8xHhiRxYUEG4en63
+                    - userId: mwDJuMFoXLTkXDdfnRaXQXaJqww1
+                      score: 38.24780090503394
+                    - userId: jO7sUhIDTQbAJ3w86akzncTlpRG2
+                      score: 36.45352993667529
+                    - userId: rX4SKaPEoUOQNqQIfnqyZQwXhNj1
+                      score: 34.86300574634476
+                    - score: 29.677061767953994
+                      userId: QtBvbpuAP0cXKh8qUgCsSpGW0nh2
+                    - userId: GPpWQpjHAgPvW3BlsKZf8qhv4yH3
+                      score: 21.581174260703683
+                    - userId: SNLRUd19xDTn32MWCDqswcHkyFH3
+                      score: 17.38641570209124
+                    - score: 15.90490386319656
+                      userId: jU6q1ZdnPgWlZTa1E1W2CQFPdME3
+                    - score: 15.613380309956685
+                      userId: JJjmWoXwhET7TJ8CHADmRDSovuX2
+                    - score: 11.36122480940745
+                      userId: YGZdZUSFQyM8j2YzPaBqki8NBz23
+                    - score: 11.029016733154446
+                      userId: kyVV8tKaA5Mu69oZWDinwv20jaD2
+                    - score: 9.682299319124468
+                      userId: i7BDZ34Ex1TXYzIZgsEqgJmNFHi2
+                    - score: 7.391136019124753
+                      userId: wIuHQ2CzoGSofjPKHBouEzNMcMy2
+                    - userId: w29JuzBYXLM9t89V7IzuSl5Ay9p2
+                      score: 5.681281767920268
+                    - userId: H6b5PWELWfRV6HhyHAlCGq7yJJu2
+                      score: 5.670988623976584
+                    - userId: BmyV8CvJyActtCWcN3jBL2rCox82
+                      score: 5.4833668828990625
+                    - userId: gy7XPwvOfCZG1ScLESbNKm4YG4c2
+                      score: 4.420709695186832
+                    - userId: uW5CzMuacDT9FWeLZdvy3EevEJ33
+                      score: 3.3719606978733765
+                    - score: 3.1992418833558407
+                      userId: jYAx4a6pX2eFaxHqYma4NIz3Inw2
+                    - userId: ci3npTDMBMMxuFGR5Fxs4BcCesJ3
+                      score: 2.6475365360504597
+                    - score: 2.3916950116206444
+                      userId: ffwIBb255DhSsJRh3VWZ4RY2pxz2
+                    - userId: 1byffozk9qMdipy9hkZI5jyIx222
+                      score: 2.3802758665690495
+                    - userId: 5zeWhzi9nlNNf5C9TVjshAN7QOd2
+                      score: 2.0145829319943545
+                    - score: 1.9128402960246653
+                      userId: EUxW8oPZBNPRI9gcN1yXN19kKHc2
+                    - score: 1.85968354694241
+                      userId: JSL3iphVpGajj9FErpEEZgsJFsI2
+                    - userId: Rt9NXFMcLCP8O5r5668ip0uT2bf1
+                      score: 1.7409167638563119
+                    - userId: PZnIInE520cQKvTty0lOx1ND7uy1
+                      score: 1.7109875008143742
+                    - score: 1.646499976895404
+                      userId: m1vFVXi0APUBsi455NAe1ug5eFJ3
+                    - score: 1.636980786513547
+                      userId: CcSCY51su1WMlZWhKyWTDoG29H93
+
 components:
 
   securitySchemes:
@@ -246,4 +670,60 @@ components:
               type: number
             weekly:
               type: number
+
+    Group:
+      type: object
+      properties:
+        slug:
+          type: string
+        totalContracts:
+          type: number
+        totalMembers:
+          type: number
+        aboutPostId:
+          type: string
+        mostRecentContractAddedTime:
+          type: integer
+          description: UNIX timestamp
+        creatorId:
+          type: string
+        id:
+          type: string
+        createdTime:
+          type: integer
+          description: UNIX timestamp
+        mostRecentActivityTime:
+          type: integer
+          description: UNIX timestamp
+        name:
+          type: string
+          description: Human readable name of the group
+        about:
+          type: string
+          description: Short human readable description of the group
+        anyoneCanJoin:
+          type: boolean
+        cachedLeaderboard:
+          $ref: '#/components/schemas/Leaderboard'
+
+    Leaderboard:
+      type: object
+      properties:
+        topCreators:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardUser'
+        topTraders:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardUser'
+
+    LeaderboardUser:
+      type: object
+      properties:
+        userId:
+          type: string
+        score:
+          type: number
+          description: For traders, their profit. For creators, their market volume.
 
