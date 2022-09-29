@@ -1,7 +1,10 @@
 openapi: 3.0.0
 info:
   title: Manifold Markets API
-  description: Unofficial documentation for the Manifold Markets API for accessing user, group and market data, and placing bets.
+  description:
+    Unofficial documentation for the Manifold Markets API for accessing user, group and market data, and placing bets.
+
+
   version: v0.0.20220715.1
 
 servers:
@@ -12,7 +15,7 @@ paths:
   /v0/users:
     get:
       operationId: v0_users_get
-      description: "Retrieves all users in a single response. This may be a very large response."
+      description: "Lists all users. This may be a very large response."
       tags:
         - Users
       responses:
@@ -23,7 +26,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/LiteUser'
               example:
                 - id: ojKdYJvKvdZiWDEyBmEab7kZXYI3
                   createdTime: 1644874384982
@@ -51,7 +54,7 @@ paths:
   /v0/user/{username}:
     get:
       operationId: v0_user_get
-      description: "Retrieves the user with the given username."
+      description: "Gets a user by their username. Remember that usernames may change."
       tags:
         - Users
       parameters:
@@ -67,7 +70,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/LiteUser'
               example:
                 id: ojKdYJvKvdZiWDEyBmEab7kZXYI3
                 createdTime: 1644874384982
@@ -95,7 +98,7 @@ paths:
   /v0/user/by-id/{user_id}:
     get:
       operationId: v0_user_by_id_get
-      description: "Retrieves the user with the given ID."
+      description: "Gets a user by their unique ID. Many other API endpoints return this as the userId."
       tags:
         - Users
       parameters:
@@ -111,7 +114,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/LiteUser'
               example:
                 id: ojKdYJvKvdZiWDEyBmEab7kZXYI3
                 createdTime: 1644874384982
@@ -139,7 +142,7 @@ paths:
   /v0/me:
     get:
       operationId: v0_me_get
-      description: "Retrieves the user the current request is authenticated to. Does not support CORS."
+      description: "Returns the authenticated user. Does not support CORS."
       security:
         - APIKeyAuth: []
         - BearerAuth: []
@@ -153,7 +156,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/LiteUser'
               example:
                 id: ojKdYJvKvdZiWDEyBmEab7kZXYI3
                 createdTime: 1644874384982
@@ -181,7 +184,7 @@ paths:
   /v0/groups:
     get:
       operationId: v0_groups_get
-      description: "Retrieves all groups."
+      description: "Gets all groups, in no particular order."
       tags:
         - Groups
       parameters:
@@ -323,7 +326,7 @@ paths:
   /v0/group/{slug}:
     get:
       operationId: v0_group_by_slug_get
-      description: "Retrieves a group by its slug"
+      description: "Gets a group by its slug."
       tags:
         - Groups
       parameters:
@@ -463,7 +466,7 @@ paths:
   /v0/group/by-id/{group_id}:
     get:
       operationId: v0_group_by_id_get
-      description: "Retrieves a group by its ID"
+      description: "Gets a group by its unique ID."
       tags:
         - Groups
       parameters:
@@ -600,6 +603,213 @@ paths:
                     - score: 1.636980786513547
                       userId: CcSCY51su1WMlZWhKyWTDoG29H93
 
+  /v0/markets:
+    get:
+      operationId: v0_markets_get
+      description: Lists all markets, ordered by creation date descending.
+      tags:
+        - Markets
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: How many markets to return. The maximum and the default is 1000.
+          schema:
+            type: number
+            minimum: 0
+            maximum: 1000
+            default: 1000
+        - name: before
+          in: query
+          required: false
+          schema:
+            type: string
+          description: <
+            The ID of the market after which the list will start. For example, if you ask for the most recent 10 markets, and then perform a second query for 10 more markets with before=[the id of the 10th market], you will get markets 11 through 20.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LiteMarket'
+              example:
+                - id: Az5piqXPocs2lHd0rb8n
+                  creatorId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                  creatorUsername: clearthinkbot
+                  creatorName: Clearer Thinking Regrants
+                  createdTime: 1663384764591
+                  creatorAvatarUrl: https://firebasestorage.googleapis.com/v0/b/mantic-markets.appspot.com/o/user-images%2FClearerThinkingRegrants%2FCcKSKVMp45.52?alt=media&token=a2014958-b857-46d5-8967-2d10a72f302d
+                  closeTime: 1664607540000
+                  question: Will we fund the "National Student Forecasting Tournament"?
+                  tags: [ ]
+                  url: https://manifold.markets/clearthinkbot/will-we-fund-the-national-student-f
+                  pool:
+                    'NO': 848.7957727145126
+                    'YES': 453.7690202597048
+                  probability: 0.8179884176632995
+                  p: 0.7061062778269225
+                  totalLiquidity: 776.1561103704331
+                  outcomeType: BINARY
+                  mechanism: cpmm-1
+                  volume: 6502.97781645229
+                  volume7Days: 5646.048835065632
+                  volume24Hours: 44
+                  isResolved: false
+                  lastUpdatedTime: 1664037631899
+
+  /v0/slug/{market_slug}:
+    get:
+      operationId: v0_market_by_slug_get
+      description: Gets information about a single market by slug (the portion of the URL path after the username).
+      tags:
+        - Markets
+      parameters:
+        - name: market_slug
+          in: path
+          required: true
+          schema:
+            type: string
+          example: will-we-fund-the-stanford-biosecuri
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullMarket'
+              example:
+                id: 0Hqm34EdbgnBvooLTzMF
+                creatorId: Wtm4araEqIf71bumwK7NgJZo8kv1
+                creatorUsername: clearthinkbot
+                creatorName: Clearer Thinking Regrants
+                createdTime: 1663280150819
+                creatorAvatarUrl: https://firebasestorage.googleapis.com/v0/b/mantic-markets.appspot.com/o/user-images%2FClearerThinkingRegrants%2FCcKSKVMp45.52?alt=media&token=a2014958-b857-46d5-8967-2d10a72f302d
+                closeTime: 1664607540000
+                question: Will we fund the "Stanford Biosecurity Center"?
+                tags: [ ]
+                url: https://manifold.markets/clearthinkbot/will-we-fund-the-stanford-biosecuri
+                pool:
+                  'YES': 455.06124371188776
+                  'NO': 879.7997446809923
+                probability: 0.8303891337555145
+                p: 0.7168977998944484
+                totalLiquidity: 794.843741205661
+                outcomeType: BINARY
+                mechanism: cpmm-1
+                volume: 5864.129421994662
+                volume7Days: 2422.669292825331
+                volume24Hours: 11
+                isResolved: false
+                lastUpdatedTime: 1664085524297
+                comments:
+                  - contractId: 0Hqm34EdbgnBvooLTzMF
+                    contractQuestion: Will we fund the "Stanford Biosecurity Center"?
+                    commenterPositionShares: 63
+                    userId: mowZ7T5LBUQuy5CWgctdHMkLo8J3
+                    commentType: contract
+                    betOutcome: 'YES'
+                    userName: Nuño Sempere
+                    createdTime: 1663423921848
+                    contractSlug: will-we-fund-the-stanford-biosecuri
+                    userAvatarUrl: https://firebasestorage.googleapis.com/v0/b/mantic-markets.appspot.com/o/user-images%2FNu%C3%B1oSempere%2Fgraubard-vienna-rotated-cropped.jpeg?alt=media&token=47c54a50-7b88-4c86-9fd7-e5444e90058e
+                    commenterPositionOutcome: 'YES'
+                    content:
+                      type: doc
+                      content:
+                        - content:
+                            - text: Budget seems similar to <
+                              type: text
+                            - marks:
+                                - attrs:
+                                    href: https://www.openphilanthropy.org/grants/european-summer-program-on-rationality-general-support/
+                                    class: no-underline !text-indigo-700 z-10 break-anywhere hover:underline
+                                      hover:decoration-indigo-400 hover:decoration-2
+                                    target: _blank
+                                  type: link
+                              text: https://www.openphilanthropy.org/grants/european-summer-program-on-rationality-general-support/
+                              type: text
+                            - text: ">, and broadly checks out. "
+                              type: text
+                          type: paragraph
+                    commenterPositionProb: 0.7951468907564824
+                    id: bK8u8goRNyO4nBbEtgvF
+                    betId: bK8u8goRNyO4nBbEtgvF
+                    userUsername: NuñoSempere
+                    betAmount: 50
+                bets:
+                  - createdTime: 1663281002049
+                    loanAmount: 4.098523031149695
+                    isFilled: true
+                    userUsername: MichaelWheatley
+                    shares: 19.090909090909108
+                    outcome: 'NO'
+                    fills:
+                      - amount: 10
+                        matchedBetId:
+                        timestamp: 1663281002049
+                        shares: 19.090909090909108
+                    userAvatarUrl: https://firebasestorage.googleapis.com/v0/b/mantic-markets.appspot.com/o/user-images%2FMichaelWheatley%2FUntitled-1.png?alt=media&token=c762196e-85d0-4f0c-961a-e3a80d736c9b
+                    userName: Michael Wheatley
+                    probAfter: 0.4524886877828055
+                    fees:
+                      platformFee: 0
+                      liquidityFee: 0
+                      creatorFee: 0
+                    probBefore: 0.5
+                    userId: jO7sUhIDTQbAJ3w86akzncTlpRG2
+                    orderAmount: 10
+                    isCancelled: false
+                    contractId: 0Hqm34EdbgnBvooLTzMF
+                    id: Tjw9xounkloW0jAHYAIL
+                    amount: 10
+                description:
+                  content:
+                    - attrs:
+                        src: https://firebasestorage.googleapis.com/v0/b/dev-mantic-markets.appspot.com/o/user-images%2Fdefault%2FjCzzS9xuv0.png?alt=media&token=8235f6fc-4910-4d9f-b0eb-36aeff366489
+                        alt:
+                        title:
+                      type: image
+                    - content:
+                        - type: text
+                          text: 'Will the project "Stanford Biosecurity Center" receive '
+                        - marks:
+                            - type: bold
+                            - type: italic
+                          text: any
+                          type: text
+                        - type: text
+                          text: " funding from the "
+                        - text: Clearer Thinking Regranting
+                          type: text
+                          marks:
+                            - attrs:
+                                target: _blank
+                                href: https://www.clearerthinking.org/post/apply-to-the-clearer-thinking-regrants-program
+                                class: no-underline !text-indigo-700 z-10 break-anywhere hover:underline
+                                  hover:decoration-indigo-400 hover:decoration-2
+                              type: link
+                        - text: " program run by "
+                          type: text
+                        - marks:
+                            - type: link
+                              attrs:
+                                class: no-underline !text-indigo-700 z-10 break-anywhere hover:underline
+                                  hover:decoration-indigo-400 hover:decoration-2
+                                href: http://ClearerThinking.org
+                                target: _blank
+                          type: text
+                          text: ClearerThinking.org
+                        - type: text
+                          text: "? "
+                      type: paragraph
+                  type: doc
+                textDescription: "Will the project \"Stanford Biosecurity Center\" receive any funding
+                  from the Clearer Thinking Regranting program run by ClearerThinking.org?"
+
+
 components:
 
   securitySchemes:
@@ -617,39 +827,53 @@ components:
 
   schemas:
 
-    User:
+    LiteUser:
       type: object
+      required:
+        - id
+        - createdTime
+        - name
+        - username
+        - url
       properties:
         id:
           type: string
+          description: User's unique ID
         createdTime:
           type: integer
-          description: UNIX timestamp
+          description: UNIX timestamp in milliseconds since epoch.
         name:
           type: string
+          description: Display name, may contain spaces
         username:
           type: string
+          description: Username, used in urls
         url:
           type: string
-          description: URL linking to the user's Manifold profile
+          description: link to user's profile on Manifold
         avatarUrl:
           type: string
           description: URL linking to the user's avatar
         bio:
           type: string
+        bannerUrl:
+          type: string
         website:
           type: string
-          description: URL linking to the user's set personal website
+          description: Link the user's chosen personal website
         twitterHandle:
           type: string
         discordHandle:
           type: string
         balance:
           type: number
+          description: Here for convenience only and may be removed in the future.
         totalDeposits:
           type: number
+          description: Here for convenience only and may be removed in the future.
         profitCached:
           type: object
+          description: Not in official docs. Should probably assume here for convenience only and may be removed in the future.
           properties:
             weekly:
               type: number
@@ -661,6 +885,7 @@ components:
               type: number
         creatorVolumeCached:
           type: object
+          description: Not in official docs. Should probably assume here for convenience only and may be removed in the future.
           properties:
             monthly:
               type: number
@@ -684,17 +909,17 @@ components:
           type: string
         mostRecentContractAddedTime:
           type: integer
-          description: UNIX timestamp
+          description: UNIX timestamp in milliseconds since epoch.
         creatorId:
           type: string
         id:
           type: string
         createdTime:
           type: integer
-          description: UNIX timestamp
+          description: UNIX timestamp in milliseconds since epoch.
         mostRecentActivityTime:
           type: integer
-          description: UNIX timestamp
+          description: UNIX timestamp in milliseconds since epoch.
         name:
           type: string
           description: Human readable name of the group
@@ -726,4 +951,187 @@ components:
         score:
           type: number
           description: For traders, their profit. For creators, their market volume.
+
+    LiteMarket:
+      type: object
+      required:
+        - id
+        - creatorUsername
+        - creatorName
+        - createdTime
+        - question
+        - tags
+        - url
+        - outcomeType
+        - mechanism
+        - probability
+        - pool
+        - volume
+        - volume7Days
+        - volume24Hours
+        - isResolved
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this market,
+        creatorId:
+          type: string
+        creatorUsername:
+          type: string
+        creatorName:
+          type: string
+        creatorAvatarUrl:
+          type: string
+        createdTime:
+          type: integer
+          description: UNIX timestamp in milliseconds since epoch.
+        closeTime:
+          type: integer
+          description: UNIX timestamp in milliseconds since epoch. Min of creator's chosen date, and resolutionTime.
+        question:
+          type: string
+        tags:
+          type: array
+          description: <
+            A list of tags on each market. Any user can add tags to any market.
+            This list also includes the predefined categories shown as filters on the home page.
+            This url includes the creator's username, but this doesn't need to be correct when constructing valid URLs.
+            i.e. https://manifold.markets/Austin/test-market is the same as https://manifold.markets/foo/test-market
+          items:
+            type: string
+        url:
+          type: string
+          description: "Note: This url always points to https://manifold.markets, regardless of what instance the api is running on."
+        pool:
+          type: object
+          description: For CPMM markets, the number of shares in the liquidity pool. For DPM markets, the amount of mana invested in each answer.
+          additionalProperties:
+            type: number
+        probability:
+          type: number
+        p:
+          type: number
+          description: CPMM markets only, probability constant in y^p * n^(1-p) = k
+        totalLiquidity:
+          type: number
+          description: CPMM markets only, the amount of mana deposited into the liquidity pool
+        outcomeType:
+          type: string
+          enum:
+            - BINARY
+            - FREE_RESPONSE
+            - NUMERIC
+        mechanism:
+          type: string
+          enum:
+            - dpm-2
+            - cpmm-1
+        volume:
+          type: number
+        volume7Days:
+          type: number
+        volume24Hours:
+          type: number
+        isResolved:
+          type: boolean
+        resolutionTime:
+          type: integer
+          description: UNIX timestamp in milliseconds since epoch.
+        resolutionProbability:
+          type: number
+          description: Used for BINARY markets resolved to MKT
+        lastUpdatedTime:
+          type: integer
+          description: UNIX timestamp in milliseconds since epoch.
+
+    FullMarket:
+      allOf:
+        - $ref: "#/components/schemas/LiteMarket"
+        - type: object
+          description: A complete market, along with bets, comments, and answers (for free response markets)
+          required:
+            - bets
+            - comments
+            - description
+            - textDescription
+          properties:
+            bets:
+              type: array
+              items:
+                $ref: "#/components/schemas/Bet"
+            comments:
+              type: array
+              items:
+                $ref: "#/components/schemas/Comment"
+            answers:
+              type: array
+              items:
+                $ref: "#/components/schemas/Answer"
+            description:
+              type: object
+              additionalProperties: true
+              description: Rich text content. See https://tiptap.dev/guide/output#option-1-json
+            textDescription:
+              type: string
+              description: string description without formatting, images, or embeds
+
+    Bet:
+      type: object
+      required:
+        - id
+        - contractId
+        - amount
+        - outcome
+        - shares
+        - probBefore
+        - probAfter
+        - createdTime
+      properties:
+        id:
+          type: string
+        contractId:
+          type: string
+        amount:
+          type: number
+          description: bet size; negative if SELL bet
+        outcome:
+          type: string
+        shares:
+          type: number
+          description: dynamic parimutuel pool weight; negative if SELL bet
+        probBefore:
+          type: number
+        probAfter:
+          type: number
+        sale:
+          $ref: "#/components/schemas/Sale"
+        isSold:
+          type: boolean
+          description: true if this BUY bet has been sold
+        isAnte:
+          type: boolean
+        createdTime:
+          type: number
+          description: UNIX timestamp in milliseconds since epoch.
+
+    Sale:
+      type: object
+      required:
+        - amount
+        - betId
+      properties:
+        amount:
+          type: number
+          description: amount user makes from sale
+        betId:
+          type: string
+          description: id of bet being sold
+
+    Comment:
+      type: object
+
+    Answer:
+      type: object
+
+
 
